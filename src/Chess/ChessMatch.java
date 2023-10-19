@@ -51,6 +51,7 @@ public class ChessMatch {
         validateSourcePosition(source);
         validateTargetPosition(source,target);
         Piece capturedPiece = makeMove (source,target);
+        nextTurn();
         return (ChessPiece) capturedPiece;
     }
 
@@ -61,15 +62,15 @@ public class ChessMatch {
         return capturedPiece;
     }
 
-    private void validateSourcePosition(Position position){
+    private void validateSourcePosition (Position position){
         if (!board.thereIsaPiece(position)){
-            throw new ChessException("There is no source position");
+            throw new ChessException("There is no piece on source position");
+        }
+        if (currentPlayer != ((ChessPiece)board.piece(position)).getColor()){
+            throw new ChessException("The cosen piece is not yours");
         }
         if (!board.piece(position).isThereAnyPossibleMove()){
-            throw new ChessException("There is no possible move for the chosen piece");
-        }
-        if (currentPlayer != ((ChessPiece)board.piece(position)).getColor());{
-            throw new ChessException("The chosen piece is not yours");
+            throw new ChessException("There is no possible moves for the chosen piece");
         }
     }
 
